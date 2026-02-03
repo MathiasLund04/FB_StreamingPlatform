@@ -26,7 +26,7 @@ public class MySqlMovieRepository {
         }
 
     } catch (Exception e ){
-        throw new DataAccessException("Error counting movies");
+        throw new DataAccessException("Error counting movies", e);
     }
 
     }
