@@ -1,0 +1,21 @@
+Create database StreamingPlatform
+use StreamingPlatform
+
+create table User(
+id int primary key auto_increment,
+email varchar(50) not null,
+name varchar(50) not null,
+SubscriptionType varchar(50) not null
+);
+
+create table Movie(
+id int primary key auto_increment,
+title varchar(50) not null,
+rating double not null,
+genre varchar(50)
+);
+
+create table Favorite(
+userID int primary key auto_increment,
+movieID int not null
+);
