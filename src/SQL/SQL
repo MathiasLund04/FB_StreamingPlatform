@@ -1,21 +1,21 @@
 Create database StreamingPlatform
 use StreamingPlatform
 
-create table User(
+create table Repository.User(
 id int primary key auto_increment,
 email varchar(50) not null,
 name varchar(50) not null,
 SubscriptionType varchar(50) not null
 );
 
-create table Movie(
+create table Repository.Movie(
 id int primary key auto_increment,
 title varchar(100) not null,
 rating double not null,
 genre varchar(50)
 );
 
-create table Favorite(
+create table Repository.Favorite(
 userID int,
 movieID int not null,
 foreign key (userID) references user(id),
