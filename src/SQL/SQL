@@ -17,5 +17,7 @@ genre varchar(50)
 
 create table Favorite(
 userID int primary key auto_increment,
-movieID int not null
+movieID int not null,
+foreign key (userID) references user(id),
+foreign key (movieID) references movie(id)
 );
