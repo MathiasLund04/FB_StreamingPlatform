@@ -10,7 +10,7 @@ SubscriptionType varchar(50) not null
 
 create table Movie(
 id int primary key auto_increment,
-title varchar(50) not null,
+title varchar(100) not null,
 rating double not null,
 genre varchar(50)
 );
