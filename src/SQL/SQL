@@ -16,8 +16,13 @@ genre varchar(50)
 );
 
 create table Favorite(
-userID int primary key auto_increment,
+userID int,
 movieID int not null,
 foreign key (userID) references user(id),
 foreign key (movieID) references movie(id)
 );
+
+select name, title
+from favorite
+inner join user on favorite.userID = user.id
+inner join movie on favorite.movieID = movie.id;
