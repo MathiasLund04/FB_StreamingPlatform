@@ -18,10 +18,14 @@ public class Main {
 
     public static void main(String[] args)  {
 
+
+        dbConfig.testConnection();
+
         service.movieCount();
         System.out.println(" ");
 
         List<Movie> allMovies = service.getAllMovies();
+
 
         for (Movie movie : allMovies) {
 

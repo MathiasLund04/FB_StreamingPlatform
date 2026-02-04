@@ -2,6 +2,7 @@ package UI;
 
 import Infrastructure.DbConfig;
 import Model.Movie;
+import Repository.DataAccessException;
 import Repository.Movie.MySqlMovieRepository;
 import Service.StreamingService;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -13,11 +14,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.util.List;
+
 public class MainController {
     @FXML private TableView<Movie> mTable;
     @FXML private TableColumn<Movie, String> colTitle;
     @FXML private TableColumn<Movie, Double> colRating;
     @FXML private TableColumn<Movie, String> colGenre;
+
+    @FXML private Label lblStatus;
 
 
     private final ObservableList<Movie> items = FXCollections.observableArrayList();
@@ -37,12 +42,24 @@ public class MainController {
 
         mTable.setItems(items);
 
-
-
-    }
-
-    @FXML
-    protected void onHelloButtonClick() {
+        refreshTable();
 
     }
+
+    private void refreshTable() {
+        try {
+            List<Movie> all =  service.getAllMovies();
+            items.addAll(all);
+            lblStatus.setText("Loaded " + all.size() + " movies");
+
+        } catch (DataAccessException dae) {
+
+            dae.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }

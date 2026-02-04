@@ -5,7 +5,7 @@ create table User(
 id int primary key auto_increment,
 email varchar(50) not null,
 name varchar(50) not null,
-SubscriptionType varchar(50) not null
+SubscriptionType ENUM('Basic','Standard','Premium') not null
 );
 
 create table Movie(
@@ -26,3 +26,40 @@ select name, title
 from favorite
 inner join user on favorite.userID = user.id
 inner join movie on favorite.movieID = movie.id;
+
+insert into Movie(title,rating,genre)
+value
+('Godfather', 9.2, 'Crime Drama'),
+('Pulp Fiction', 8.8 , 'Drama'),
+('The Lord of the Rings: The Return of the King', 9.0 , 'Adventure'),
+('Star Wars', 8.6 , 'Epic'),
+('Dune', 8.0 , 'Sci-Fi'),
+('The Nice Guys', 7.4 , 'Buddy Comedy'),
+('John Wick', 7.5 , 'Action'),
+('Avengers: Endgame', 8.4 , 'Superhero'),
+('Frankenstein', 7.5 , 'Horror'),
+('Scary Movie', 6.3 , 'Horror Parody')
+
+insert into User(email,name,SubscriptionType)
+value
+('Test1234@mail.com','John Doe','Basic'),
+('Bob1977@gmail.com','Bob','Basic'),
+('Mik@hotmail.ru','Mik','Premium'),
+('Pat34@gmail.com','Patrick','Standard'),
+('Mils2789@gmail.com','Miller','Standard')
+
+insert into Favorite
+value
+(2,2),
+(2,1),
+(2,4),
+(3,8),
+(4,1),
+(4,7),
+(5,10),
+(3,5),
+(5,9),
+(5,5),
+(4,3),
+(4,4)
+
