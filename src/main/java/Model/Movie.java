@@ -7,6 +7,7 @@ public class Movie {
     private double rating;
     private String genre;
 
+    //tom Konstrukter
     public Movie() {}
 
     public Movie(int id, String title, double rating, String genre) {
