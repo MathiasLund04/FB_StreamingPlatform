@@ -25,11 +25,15 @@ public class StreamingService {
     public List<Movie> getAllMovies() throws DataAccessException {
         return mRepo.findAll();
     }
+    public List<User> getAllUsers() throws DataAccessException {
+        return uRepo.findAllUsers();
+    }
 
     public List<Movie> findFavoriteByEmail(String email){
         String e = validateEmail(email);
 
-        User user = uRepo.findByEmail(e);
+        User user = uRepo.findByEmail(e).orElseThrow(() ->
+                new DataAccessException("User with email " + e + " not found"));
 
         return fRepo.findFavoriteByUserID(user.getId());
     }

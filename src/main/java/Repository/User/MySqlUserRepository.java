@@ -1,12 +1,16 @@
 package Repository.User;
 
+import Exceptions.DataAccessException;
 import Infrastructure.DbConfig;
+import Model.Movie;
 import Model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class MySqlUserRepository {
@@ -15,8 +19,29 @@ public class MySqlUserRepository {
         this.db = db;
     }
 
+    public List<User> findAllUsers() throws DataAccessException {
+        String sql = "select * from Users";
+
+        List<User> users = new ArrayList<>();
+
+        try(Connection con = db.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()){
+
+            while(rs.next()){
+                users.add(mapUser(rs));
+            }
+            return users;
+
+        }catch(Exception e){
+            throw new  DataAccessException("Error in findAll()" , e);
+        }
+
+
+    }
+
     public Optional<User> findByEmail(String email) {
-        String sql = "SELECT * FROM User WHERE email = ?";
+        String sql = "SELECT * FROM User WHERE email LIKE ?";
 
         try (Connection con = db.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {

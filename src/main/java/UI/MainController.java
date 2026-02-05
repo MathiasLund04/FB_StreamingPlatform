@@ -1,9 +1,11 @@
 package UI;
 
+import Exceptions.ValidationException;
 import Infrastructure.DbConfig;
 import Model.Movie;
 import Model.User;
 import Exceptions.DataAccessException;
+import Repository.Favorite.MySqlFavoriteRepository;
 import Repository.Movie.MySqlMovieRepository;
 import Repository.User.MySqlUserRepository;
 import Service.StreamingService;
@@ -29,14 +31,20 @@ public class MainController {
     @FXML private TableColumn<Movie, String> favTitle;
     @FXML private TableColumn<Movie, Double> favRating;
     @FXML private TableColumn<Movie, String> favGenre;
+    @FXML private TableView<User> uTable;
+    @FXML private TableColumn<User, String> userName;
+    @FXML private TableColumn<User, String> userEmail;
+    @FXML private TableColumn<User, String> userSubsription;
 
 
+    @FXML private Label userTxt;
     @FXML private Label lblStatus;
     @FXML private TextField searchTxt;
 
 
     private final ObservableList<Movie> items = FXCollections.observableArrayList();
     private final ObservableList<Movie> favItems = FXCollections.observableArrayList();
+    private final ObservableList<User> users = FXCollections.observableArrayList();
 
     private StreamingService service;
 
@@ -46,7 +54,8 @@ public class MainController {
         DbConfig db = new DbConfig();
         MySqlMovieRepository mRepo = new MySqlMovieRepository(db);
         MySqlUserRepository uRepo = new MySqlUserRepository(db);
-        service = new StreamingService(mRepo,uRepo);
+        MySqlFavoriteRepository fRepo = new MySqlFavoriteRepository(db);
+        service = new StreamingService(mRepo,uRepo,fRepo);
 
         colTitle.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTitle()));
         colRating.setCellValueFactory(cell-> new SimpleDoubleProperty(cell.getValue().getRating()).asObject());
@@ -55,7 +64,13 @@ public class MainController {
         favTitle.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTitle()));
         favRating.setCellValueFactory(cell -> new SimpleDoubleProperty(cell.getValue().getRating()).asObject());
         favGenre.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getGenre()));
-        fTable.setItems(items);
+
+        userName.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
+        userEmail.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getEmail()));
+        userSubsription.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getSubscriptionType()));
+
+        uTable.setItems(users);
+        fTable.setItems(favItems);
         mTable.setItems(items);
 
         refreshTable();
@@ -66,7 +81,9 @@ public class MainController {
     private void refreshTable() {
         try {
             List<Movie> all =  service.getAllMovies();
+            List<User> allUsers = service.getAllUsers();
             items.addAll(all);
+            users.addAll(allUsers);
             lblStatus.setText("Loaded " + all.size() + " movies");
 
         } catch (DataAccessException dae) {
@@ -79,16 +96,24 @@ public class MainController {
 
     @FXML
     private void onSearch() {
-        String email =  searchTxt.getText().trim();
+        String email =  searchTxt.getText();
         try{
-            Optional<User> user = service.findIdByEmail(email);
+            fTable.getItems().setAll(service.findFavoriteByEmail(email));
+            userTxt.setText("Selected user: " + email);
 
-            fTable.getItems().setAll(service.)
+            if(fTable.getItems().isEmpty()){
+                lblStatus.setText("No favorites found for this user");
+            }
 
-        } catch (DataAccessException dae) {
+        }
+        catch(ValidationException e) {
+            lblStatus.setText("Status"+ e);
+        }
+        catch (DataAccessException dae) {
             dae.printStackTrace();
             lblStatus.setText("Search error: " + dae.getMessage());
         }
+
 
     }
 
