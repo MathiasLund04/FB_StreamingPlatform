@@ -65,15 +65,23 @@ public class MainController {
 
     @FXML
     private void onSearch() {
-        String movie =  searchTxt.getText();
+        String movie =  searchTxt.getText().trim();
+
 
         try{
             Optional<Movie> optional = service.findByTitle(movie);
-            mTable.getItems().setAll(optional.get());
+            if(optional.isPresent()){
+                items.setAll(optional.get());
+                lblStatus.setText("Found " + items.size() + " movies Maching: " + movie);
+            } else{
+                items.clear();
+                lblStatus.setText("No movies found maching: " + movie);
+            }
         } catch (DataAccessException dae) {
             dae.printStackTrace();
+            lblStatus.setText("Search error: " + dae.getMessage());
         }
-        refreshTable();
+
     }
 
 

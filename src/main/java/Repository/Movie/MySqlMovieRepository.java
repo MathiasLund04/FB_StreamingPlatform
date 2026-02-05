@@ -58,21 +58,18 @@ public class MySqlMovieRepository {
     }
 
     public Optional<Movie> findByTitle(String title){
-        String sql = "select * from Movie where id = %?%";
+        String sql = "select * from Movie where Title Like ?%";
 
         try(Connection con = db.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1,title);
+            ps.setString(1,"%" +title+ "%");
 
             try(ResultSet rs = ps.executeQuery()){
                 if(rs.next()){
                     return Optional.of(mapRow(rs));
                 }
             }
-
-        } catch (DataAccessException e){
-            throw new   DataAccessException("Error in findByTitle()" , e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
