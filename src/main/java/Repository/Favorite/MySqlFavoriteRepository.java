@@ -24,7 +24,7 @@ public List<Movie> findFavoriteByUserID(int userId){
             from favorite
             inner join user on favorite.userID = user.id
             inner join movie on favorite.movieID = movie.id
-            where favorite.userID = ?;
+            where user.id = ?;
             """;
 
     List<Movie> result = new ArrayList<>();

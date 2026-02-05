@@ -20,7 +20,7 @@ public class MySqlUserRepository {
     }
 
     public List<User> findAllUsers() throws DataAccessException {
-        String sql = "select * from Users";
+        String sql = "select id,name,email,subscriptionType from user";
 
         List<User> users = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class MySqlUserRepository {
             return users;
 
         }catch(Exception e){
-            throw new  DataAccessException("Error in findAll()" , e);
+            throw new  DataAccessException("Error in findAllUsers()" , e);
         }
 
 
@@ -67,7 +67,7 @@ public class MySqlUserRepository {
                 rs.getInt("id"),
                 rs.getString("email"),
                 rs.getString("name"),
-                rs.getString("subscription_type")
+                rs.getString("subscriptionType")
         );
     }
 

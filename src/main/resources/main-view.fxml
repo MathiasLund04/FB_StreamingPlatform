@@ -52,9 +52,9 @@
                         <Label fx:id="userTxt" layoutX="24.0" layoutY="112.0" prefHeight="18.0" prefWidth="120.0" text="Label" />
                         <TableView fx:id="uTable" layoutX="114.0" layoutY="356.0" prefHeight="151.0" prefWidth="291.0">
                           <columns>
-                            <TableColumn fx:id="Name" prefWidth="49.199951171875" text="Name" />
-                            <TableColumn fx:id="email" prefWidth="154.00003051757812" text="email" />
-                              <TableColumn fx:id="Subscription" prefWidth="88.00006103515625" text="Subscription" />
+                            <TableColumn fx:id="userName" prefWidth="49.199951171875" text="Name" />
+                            <TableColumn fx:id="userEmail" prefWidth="154.00003051757812" text="email" />
+                              <TableColumn fx:id="userSubsription" prefWidth="88.00006103515625" text="Subscription" />
                           </columns>
                         </TableView>
                             </children>
