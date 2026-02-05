@@ -36,7 +36,7 @@ public class MainController {
     @FXML private TableColumn<User, String> userEmail;
     @FXML private TableColumn<User, String> userSubsription;
 
-
+    @FXML private Label emailTxt;
     @FXML private Label userTxt;
     @FXML private Label lblStatus;
     @FXML private TextField searchTxt;
@@ -98,8 +98,10 @@ public class MainController {
     private void onSearch() {
         String email =  searchTxt.getText();
         try{
+            Optional<User> user = service.findByEmail(email);
+            userTxt.setText(user.get().getName());
             fTable.getItems().setAll(service.findFavoriteByEmail(email));
-            userTxt.setText("Selected user: " + email);
+            emailTxt.setText("Selected email: " + email);
 
             if(fTable.getItems().isEmpty()){
                 lblStatus.setText("No favorites found for this user");

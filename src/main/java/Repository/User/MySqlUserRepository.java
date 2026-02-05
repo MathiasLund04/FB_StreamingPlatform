@@ -41,12 +41,12 @@ public class MySqlUserRepository {
     }
 
     public Optional<User> findByEmail(String email) {
-        String sql = "SELECT * FROM User WHERE email LIKE ?";
+        String sql = "SELECT id, email, name, subscriptionType FROM User WHERE LOWER(email) LIKE LOWER(?)";
 
         try (Connection con = db.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, email);
+            ps.setString(1, email.trim());
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

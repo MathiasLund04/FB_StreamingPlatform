@@ -9,6 +9,7 @@ import Repository.Movie.MySqlMovieRepository;
 import Repository.User.MySqlUserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class StreamingService {
 
@@ -36,6 +37,11 @@ public class StreamingService {
                 new DataAccessException("User with email " + e + " not found"));
 
         return fRepo.findFavoriteByUserID(user.getId());
+    }
+
+    public Optional<User> findByEmail(String email) {
+        String e = validateEmail(email);
+        return uRepo.findByEmail(e);
     }
 
     public void movieCount(){

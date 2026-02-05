@@ -20,7 +20,7 @@ public class MySqlFavoriteRepository {
 
 public List<Movie> findFavoriteByUserID(int userId){
     String sql = """
-            select Title, Rating, Genre
+            select movie.id, movie.title, movie.rating, movie.genre
             from favorite
             inner join user on favorite.userID = user.id
             inner join movie on favorite.movieID = movie.id
