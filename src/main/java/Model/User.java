@@ -26,4 +26,7 @@ public class User {
 
     public String getSubscriptionType() { return SubscriptionType; }
     public void setSubscriptionType(String subscriptionType) { this.SubscriptionType = subscriptionType; }
+
+    @Override
+    public String toString() { return id + " " + email + " " + name + " " + SubscriptionType; }
 }

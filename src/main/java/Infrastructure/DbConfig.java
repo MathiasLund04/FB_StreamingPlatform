@@ -1,6 +1,6 @@
 package Infrastructure;
 
-import Repository.DataAccessException;
+import Exceptions.DataAccessException;
 
 import java.io.InputStream;
 import java.sql.Connection;

@@ -2,8 +2,10 @@ package UI;
 
 import Infrastructure.DbConfig;
 import Model.Movie;
-import Repository.DataAccessException;
+import Model.User;
+import Exceptions.DataAccessException;
 import Repository.Movie.MySqlMovieRepository;
+import Repository.User.MySqlUserRepository;
 import Service.StreamingService;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,12 +25,18 @@ public class MainController {
     @FXML private TableColumn<Movie, String> colTitle;
     @FXML private TableColumn<Movie, Double> colRating;
     @FXML private TableColumn<Movie, String> colGenre;
+    @FXML private TableView<Movie> fTable;
+    @FXML private TableColumn<Movie, String> favTitle;
+    @FXML private TableColumn<Movie, Double> favRating;
+    @FXML private TableColumn<Movie, String> favGenre;
+
 
     @FXML private Label lblStatus;
     @FXML private TextField searchTxt;
 
 
     private final ObservableList<Movie> items = FXCollections.observableArrayList();
+    private final ObservableList<Movie> favItems = FXCollections.observableArrayList();
 
     private StreamingService service;
 
@@ -37,18 +45,24 @@ public class MainController {
 
         DbConfig db = new DbConfig();
         MySqlMovieRepository mRepo = new MySqlMovieRepository(db);
-        service = new StreamingService(mRepo);
+        MySqlUserRepository uRepo = new MySqlUserRepository(db);
+        service = new StreamingService(mRepo,uRepo);
 
         colTitle.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTitle()));
         colRating.setCellValueFactory(cell-> new SimpleDoubleProperty(cell.getValue().getRating()).asObject());
         colGenre.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getGenre()));
 
+        favTitle.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTitle()));
+        favRating.setCellValueFactory(cell -> new SimpleDoubleProperty(cell.getValue().getRating()).asObject());
+        favGenre.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getGenre()));
+        fTable.setItems(items);
         mTable.setItems(items);
 
         refreshTable();
 
     }
 
+    @FXML
     private void refreshTable() {
         try {
             List<Movie> all =  service.getAllMovies();
@@ -65,18 +79,11 @@ public class MainController {
 
     @FXML
     private void onSearch() {
-        String movie =  searchTxt.getText().trim();
-
-
+        String email =  searchTxt.getText().trim();
         try{
-            Optional<Movie> optional = service.findByTitle(movie);
-            if(optional.isPresent()){
-                items.setAll(optional.get());
-                lblStatus.setText("Found " + items.size() + " movies Maching: " + movie);
-            } else{
-                items.clear();
-                lblStatus.setText("No movies found maching: " + movie);
-            }
+            Optional<User> user = service.findIdByEmail(email);
+
+            fTable.getItems().setAll(service.)
 
         } catch (DataAccessException dae) {
             dae.printStackTrace();

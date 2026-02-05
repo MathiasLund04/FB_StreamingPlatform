@@ -1,4 +1,4 @@
-package Repository;
+package Exceptions;
 
 /**
  * Egen runtime-exception så vi kan skelne DB-fejl fra valideringsfejl.
