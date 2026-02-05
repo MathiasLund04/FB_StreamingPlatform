@@ -77,6 +77,7 @@ public class MainController {
                 items.clear();
                 lblStatus.setText("No movies found maching: " + movie);
             }
+
         } catch (DataAccessException dae) {
             dae.printStackTrace();
             lblStatus.setText("Search error: " + dae.getMessage());
