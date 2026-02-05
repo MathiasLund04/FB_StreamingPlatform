@@ -13,8 +13,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 import java.util.List;
+import java.util.Optional;
 
 public class MainController {
     @FXML private TableView<Movie> mTable;
@@ -23,6 +25,7 @@ public class MainController {
     @FXML private TableColumn<Movie, String> colGenre;
 
     @FXML private Label lblStatus;
+    @FXML private TextField searchTxt;
 
 
     private final ObservableList<Movie> items = FXCollections.observableArrayList();
@@ -60,6 +63,18 @@ public class MainController {
         }
     }
 
+    @FXML
+    private void onSearch() {
+        String movie =  searchTxt.getText();
+
+        try{
+            Optional<Movie> optional = service.findByTitle(movie);
+            mTable.getItems().setAll(optional.get());
+        } catch (DataAccessException dae) {
+            dae.printStackTrace();
+        }
+        refreshTable();
+    }
 
 
 }

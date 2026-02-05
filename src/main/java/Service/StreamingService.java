@@ -5,6 +5,7 @@ import Repository.DataAccessException;
 import Repository.Movie.MySqlMovieRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class StreamingService {
 
@@ -16,6 +17,10 @@ public class StreamingService {
 
     public List<Movie> getAllMovies() throws DataAccessException {
         return mRepo.findAll();
+    }
+
+    public Optional<Movie> findByTitle(String title){
+        return mRepo.findByTitle(title);
     }
 
     public void movieCount(){
