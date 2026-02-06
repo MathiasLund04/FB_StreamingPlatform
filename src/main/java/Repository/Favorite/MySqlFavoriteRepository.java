@@ -62,6 +62,22 @@ public class MySqlFavoriteRepository {
 
     }
 
+    public void favCount(int userID){
+        String sql = "select count(*) from favorite where userID = ?";
+
+        try(Connection con = db.getConnection();
+        PreparedStatement ps = con.prepareStatement(sql)){
+
+            ps.setInt(1, userID);
+            ps.executeQuery();
+
+        } catch (SQLException e){
+            throw new DataAccessException("Could not acces favorite");
+        }
+
+
+    }
+
     public void removeFavorite(int userID, int movieID){
         String sql = "DELETE FROM favorite where userID = ? and movieID = ?";
 

@@ -82,7 +82,9 @@ public class MainController {
             uTable.getItems().clear();
             uTable.getItems().setAll(service.getAllUsers());
             fTable.getItems().clear();
-            emailTxt.setText("");
+            emailTxt.getText();
+            userTxt.setText("Name: ");
+            searchTxt.getText();
             lblStatus.setText("Loaded available movies and users");
 
         } catch (DataAccessException dae) {
@@ -96,10 +98,14 @@ public class MainController {
     @FXML
     private void onAdd() {
         Movie selected = mTable.getSelectionModel().getSelectedItem();
+        String email = emailTxt.getText();
         if( selected == null ) {
             lblStatus.setText("Please select a movie");
+            return;
+        } else if (email.isBlank()) {
+            lblStatus.setText("Please select a user");
+            return;
         }
-        String email = searchTxt.getText();
         try {
             service.addFavoriteByEmail(email, selected.getId());
             fTable.getItems().setAll(service.findFavoriteByEmail(email));
@@ -111,10 +117,12 @@ public class MainController {
     @FXML
     private void onRemove() {
         Movie selected = fTable.getSelectionModel().getSelectedItem();
+        String email = emailTxt.getText();
+
         if( selected == null ) {
             lblStatus.setText("Please select a movie");
+            return;
         }
-        String email = searchTxt.getText();
         try {
             service.removeFavoriteByEmail(email, selected.getId());
             fTable.getItems().setAll(service.findFavoriteByEmail(email));
@@ -128,17 +136,20 @@ public class MainController {
         String email =  searchTxt.getText();
         try{
             Optional<User> user = service.findByEmail(email);
-            userTxt.setText(user.get().getName());
+            userTxt.setText("Name: " + user.get().getName());
             fTable.getItems().setAll(service.findFavoriteByEmail(email));
-            emailTxt.setText("Selected email: " + email);
+            emailTxt.setText("Selected Email: " + email);
 
             if(fTable.getItems().isEmpty()){
                 lblStatus.setText("No favorites found for this user");
+            } else{
+                lblStatus.setText(" Found " + service.favCount(user.get().getId()) +
+                        " Favorite movies for " + user.get().getName());
             }
 
         }
         catch(ValidationException e) {
-            lblStatus.setText("Status"+ e);
+            lblStatus.setText("Status: "+ e.getMessage());
         }
         catch (DataAccessException dae) {
             dae.printStackTrace();

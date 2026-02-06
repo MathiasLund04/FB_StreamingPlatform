@@ -64,6 +64,10 @@ public class StreamingService {
         mRepo.movieCount();
     }
 
+    public int favCount(int userID){
+        fRepo.favCount(userID);
+        return userID;
+    }
 
     private String validateEmail(String email) {
         if (email == null) throw new ValidationException("Ugyldig email");
