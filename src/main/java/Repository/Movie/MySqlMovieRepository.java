@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySqlMovieRepository {
+public class MySqlMovieRepository implements MovieRepository {
 
     private final DbConfig db;
 

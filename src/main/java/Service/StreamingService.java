@@ -4,6 +4,7 @@ import Exceptions.ValidationException;
 import Model.Movie;
 import Model.User;
 import Exceptions.DataAccessException;
+import Repository.Favorite.FavoriteRepository;
 import Repository.Favorite.MySqlFavoriteRepository;
 import Repository.Movie.MySqlMovieRepository;
 import Repository.User.MySqlUserRepository;
@@ -15,9 +16,9 @@ public class StreamingService {
 
     private final MySqlMovieRepository mRepo;
     private final MySqlUserRepository uRepo;
-    private final MySqlFavoriteRepository fRepo;
+    private final FavoriteRepository fRepo;
 
-    public StreamingService(MySqlMovieRepository mRepo, MySqlUserRepository uRepo, MySqlFavoriteRepository fRepo) {
+    public StreamingService(MySqlMovieRepository mRepo, MySqlUserRepository uRepo, FavoriteRepository fRepo) {
         this.mRepo = mRepo;
         this.uRepo = uRepo;
         this.fRepo = fRepo;

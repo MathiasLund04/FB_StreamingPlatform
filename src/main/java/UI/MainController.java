@@ -49,10 +49,10 @@ public class MainController {
     @FXML private void initialize() {
 
         DbConfig db = new DbConfig();
-        MySqlMovieRepository mRepo = new MySqlMovieRepository(db);
-        MySqlUserRepository uRepo = new MySqlUserRepository(db);
-        MySqlFavoriteRepository fRepo = new MySqlFavoriteRepository(db);
-        service = new StreamingService(mRepo,uRepo,fRepo);
+        MySqlMovieRepository movieRepo = new MySqlMovieRepository(db);
+        MySqlUserRepository userRepo = new MySqlUserRepository(db);
+        MySqlFavoriteRepository favRepo = new MySqlFavoriteRepository(db);
+        service = new StreamingService(movieRepo,userRepo,favRepo);
 
         colTitle.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTitle()));
         colRating.setCellValueFactory(cell-> new SimpleDoubleProperty(cell.getValue().getRating()).asObject());

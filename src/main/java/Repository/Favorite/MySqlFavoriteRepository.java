@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySqlFavoriteRepository {
+public class MySqlFavoriteRepository implements FavoriteRepository {
     public final DbConfig db;
 
     public MySqlFavoriteRepository(DbConfig db) {

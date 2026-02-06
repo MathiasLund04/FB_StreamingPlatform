@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MySqlUserRepository {
+public class MySqlUserRepository implements UserRepository {
     private DbConfig db;
     public MySqlUserRepository(DbConfig db) {
         this.db = db;
