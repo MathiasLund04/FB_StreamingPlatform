@@ -16,7 +16,7 @@ public class HelloApplication extends Application {
         System.out.println("FXML url = " + url);
 
         FXMLLoader Loader = new FXMLLoader(url);
-        Scene scene = new Scene(Loader.load(), 320, 240);
+        Scene scene = new Scene(Loader.load(), 800, 600);
 
         stage.setTitle("Streaming Platform");
         stage.setScene(scene);

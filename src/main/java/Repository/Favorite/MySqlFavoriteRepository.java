@@ -18,7 +18,7 @@ public class MySqlFavoriteRepository {
         this.db = db;
     }
 
-public List<Movie> findFavoriteByUserID(int userId){
+    public List<Movie> findFavoriteByUserID(int userId){
     String sql = """
             select movie.id, movie.title, movie.rating, movie.genre
             from favorite
@@ -45,6 +45,13 @@ public List<Movie> findFavoriteByUserID(int userId){
         throw new DataAccessException("Could not get Favorites for userID" + e);
     }
 }
+
+    public void addFavorite(int userID, int movieID){
+        String sql = """
+            INSERT IGNORE INTO favorite ()
+            
+        """
+    }
 
     public Movie favMapRow(ResultSet rs) throws SQLException {
         return  new Movie(
