@@ -47,7 +47,7 @@ public class MySqlFavoriteRepository {
 }
 
     public void addFavorite(int userID, int movieID){
-        String sql = "INSERT IGNORE INTO favorite(userID,movieID)  VALUES (?,?)";
+        String sql = "INSERT IGNORE INTO favorite (userID,movieID)  VALUES (?,?)";
 
         try(Connection con = db.getConnection();
             PreparedStatement ps = con.prepareStatement(sql)) {
@@ -60,6 +60,21 @@ public class MySqlFavoriteRepository {
             throw new DataAccessException("Could not add to favorite");
         }
 
+    }
+
+    public void removeFavorite(int userID, int movieID){
+        String sql = "DELETE FROM favorite where userID = ? and movieID = ?";
+
+        try(Connection con = db.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)){
+
+            ps.setInt(1, userID);
+            ps.setInt(2, movieID);
+            ps.executeUpdate();
+
+        }   catch (SQLException e){
+            throw new DataAccessException("Could not remove from favorite");
+        }
     }
 
     public Movie favMapRow(ResultSet rs) throws SQLException {

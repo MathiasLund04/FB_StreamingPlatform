@@ -47,7 +47,7 @@
                                         <TableColumn fx:id="favGenre" prefWidth="76.79994201660156" text="Genre" />
                                     </columns>
                                 </TableView>
-                                <Button layoutX="331.0" layoutY="460.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" text="Remove" />
+                                <Button layoutX="331.0" layoutY="460.0" mnemonicParsing="false" onAction="#onRemove" prefHeight="26.0" prefWidth="81.0" text="Remove" />
                                 <TextField fx:id="searchTxt" layoutX="12.0" layoutY="198.0" onAction="#onSearch" />
                                 <Label fx:id="emailTxt" layoutX="20.0" layoutY="334.0" prefHeight="18.0" prefWidth="120.0" text="Label" />
                                 <TableView fx:id="uTable" layoutX="12.0" layoutY="14.0" prefHeight="151.0" prefWidth="291.0">

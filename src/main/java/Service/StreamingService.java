@@ -49,7 +49,15 @@ public class StreamingService {
 
         User user = uRepo.findByEmail(e).orElseThrow(() -> new ValidationException("User with email " + e + " not found"));
 
-        fRepo.addFavorite(movieID, user.getId());
+        fRepo.addFavorite(user.getId(), movieID);
+    }
+
+    public void removeFavoriteByEmail(String email, int movieID) throws DataAccessException {
+        String e = validateEmail(email);
+
+        User user = uRepo.findByEmail(e).orElseThrow(() -> new ValidationException("User with email " + e + " not found"));
+
+        fRepo.removeFavorite(user.getId(), movieID);
     }
 
     public void movieCount(){

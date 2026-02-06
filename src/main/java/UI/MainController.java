@@ -14,10 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +36,7 @@ public class MainController {
     @FXML private Label emailTxt;
     @FXML private Label userTxt;
     @FXML private Label lblStatus;
-    @FXML private TextField searchTxt;
+    @FXML private TextField searchTxt;;
 
 
     private final ObservableList<Movie> items = FXCollections.observableArrayList();
@@ -80,11 +77,13 @@ public class MainController {
     @FXML
     private void refreshTable() {
         try {
-            List<Movie> all =  service.getAllMovies();
-            List<User> allUsers = service.getAllUsers();
-            items.addAll(all);
-            users.addAll(allUsers);
-            lblStatus.setText("Loaded " + all.size() + " movies");
+            mTable.getItems().clear();
+            mTable.getItems().setAll(service.getAllMovies());
+            uTable.getItems().clear();
+            uTable.getItems().setAll(service.getAllUsers());
+            fTable.getItems().clear();
+            emailTxt.setText("");
+            lblStatus.setText("Loaded available movies and users");
 
         } catch (DataAccessException dae) {
 
@@ -109,7 +108,21 @@ public class MainController {
             throw new DataAccessException("Error adding to favorite try again later");
         }
     }
+    @FXML
+    private void onRemove() {
+        Movie selected = fTable.getSelectionModel().getSelectedItem();
+        if( selected == null ) {
+            lblStatus.setText("Please select a movie");
+        }
+        String email = searchTxt.getText();
+        try {
+            service.removeFavoriteByEmail(email, selected.getId());
+            fTable.getItems().setAll(service.findFavoriteByEmail(email));
+        } catch (DataAccessException dae) {
+            throw new DataAccessException("Error removing from favorite try again later");
+        }
 
+    }
     @FXML
     private void onSearch() {
         String email =  searchTxt.getText();
