@@ -3,6 +3,7 @@ package Repository.User;
 import Exceptions.DataAccessException;
 import Infrastructure.DbConfig;
 import Model.Movie;
+import Model.SubscriptionType;
 import Model.User;
 
 import java.sql.Connection;
@@ -67,7 +68,7 @@ public class MySqlUserRepository implements UserRepository {
                 rs.getInt("id"),
                 rs.getString("email"),
                 rs.getString("name"),
-                rs.getString("subscriptionType")
+                SubscriptionType.valueOf(rs.getString("subscriptionType"))
         );
     }
 

@@ -4,11 +4,11 @@ public class User {
     private int id;
     private String email;
     private String name;
-    private String SubscriptionType;
+    private SubscriptionType SubscriptionType;
 
     public User() {}
 
-    public User(int id, String email, String name, String SubscriptionType) {
+    public User(int id, String email, String name, SubscriptionType SubscriptionType) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -24,8 +24,8 @@ public class User {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public String getSubscriptionType() { return SubscriptionType; }
-    public void setSubscriptionType(String subscriptionType) { this.SubscriptionType = subscriptionType; }
+    public SubscriptionType getSubscriptionType() { return SubscriptionType; }
+    public void setSubscriptionType(SubscriptionType subscriptionType) { this.SubscriptionType = subscriptionType; }
 
     @Override
     public String toString() { return id + " " + email + " " + name + " " + SubscriptionType; }

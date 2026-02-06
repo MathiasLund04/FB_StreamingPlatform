@@ -36,7 +36,7 @@ public class MainController {
     @FXML private Label emailTxt;
     @FXML private Label userTxt;
     @FXML private Label lblStatus;
-    @FXML private TextField searchTxt;;
+    @FXML private TextField searchTxt;
 
 
     private final ObservableList<Movie> items = FXCollections.observableArrayList();
@@ -64,7 +64,7 @@ public class MainController {
 
         userName.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
         userEmail.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getEmail()));
-        userSubsription.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getSubscriptionType()));
+        userSubsription.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getSubscriptionType().toString()));
 
         uTable.setItems(users);
         fTable.setItems(favItems);
@@ -98,7 +98,7 @@ public class MainController {
     @FXML
     private void onAdd() {
         Movie selected = mTable.getSelectionModel().getSelectedItem();
-        String email = emailTxt.getText();
+        String email = searchTxt.getText();
         if( selected == null ) {
             lblStatus.setText("Please select a movie");
             return;
@@ -109,6 +109,7 @@ public class MainController {
         try {
             service.addFavoriteByEmail(email, selected.getId());
             fTable.getItems().setAll(service.findFavoriteByEmail(email));
+            lblStatus.setText("Added"+ selected.getTitle()+" to favorites");
 
         } catch (DataAccessException dae) {
             throw new DataAccessException("Error adding to favorite try again later");
@@ -117,7 +118,7 @@ public class MainController {
     @FXML
     private void onRemove() {
         Movie selected = fTable.getSelectionModel().getSelectedItem();
-        String email = emailTxt.getText();
+        String email = searchTxt.getText();
 
         if( selected == null ) {
             lblStatus.setText("Please select a movie");
@@ -126,6 +127,7 @@ public class MainController {
         try {
             service.removeFavoriteByEmail(email, selected.getId());
             fTable.getItems().setAll(service.findFavoriteByEmail(email));
+            lblStatus.setText("Removed " +selected.getTitle() + " from favorites");
         } catch (DataAccessException dae) {
             throw new DataAccessException("Error removing from favorite try again later");
         }
@@ -146,7 +148,6 @@ public class MainController {
                 lblStatus.setText(" Found " + service.favCount(user.get().getId()) +
                         " Favorite movies for " + user.get().getName());
             }
-
         }
         catch(ValidationException e) {
             lblStatus.setText("Status: "+ e.getMessage());

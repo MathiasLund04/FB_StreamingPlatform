@@ -47,7 +47,6 @@ public class StreamingService {
 
     public void addFavoriteByEmail(String email, int movieID) throws DataAccessException {
         String e = validateEmail(email);
-
         User user = uRepo.findByEmail(e).orElseThrow(() -> new ValidationException("User with email " + e + " not found"));
 
         fRepo.addFavorite(user.getId(), movieID);
@@ -61,19 +60,20 @@ public class StreamingService {
         fRepo.removeFavorite(user.getId(), movieID);
     }
 
-    public void movieCount(){
-        mRepo.movieCount();
-    }
-
     public int favCount(int userID){
-        fRepo.favCount(userID);
-        return userID;
+       return fRepo.favCount(userID);
+
     }
 
     private String validateEmail(String email) {
         if (email == null) throw new ValidationException("Ugyldig email");
         String e = email.trim();
-        if (e.isBlank() || !e.contains("@")) throw new ValidationException("Ugyldig email");
+        for (int i = 0; i < getAllUsers().size(); i++) {
+        if (e.isBlank() || !e.contains("@")) throw new ValidationException("Unknown email");
+        if (!getAllUsers().get(i).getEmail().equals(e)) {
+                throw new DataAccessException("Email " + e + " not found");
+            }
+        }
         return e;
     }
 

@@ -37,24 +37,6 @@ public class MySqlMovieRepository implements MovieRepository {
 
     }
 
-    public void movieCount(){
-    String sql = "select count(*) from Movie";
-
-    try(Connection con = db.getConnection();
-        PreparedStatement ps = con.prepareStatement(sql)) {
-
-        ResultSet rs = ps.executeQuery();
-        if(rs.next()){
-            int count = rs.getInt(1);
-            System.out.println("Movie count : " + count);
-        }
-
-    } catch (Exception e ){
-        throw new DataAccessException("Error counting movies", e);
-    }
-
-    }
-
     public Movie mapRow(ResultSet rs) throws SQLException{
         return  new Movie(
             rs.getInt("id"),

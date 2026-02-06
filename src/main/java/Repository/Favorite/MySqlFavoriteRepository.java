@@ -62,19 +62,22 @@ public class MySqlFavoriteRepository implements FavoriteRepository {
 
     }
 
-    public void favCount(int userID){
+    public int favCount(int userID){
         String sql = "select count(*) from favorite where userID = ?";
 
         try(Connection con = db.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)){
 
             ps.setInt(1, userID);
-            ps.executeQuery();
-
+            try(ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+                return 0;
+            }
         } catch (SQLException e){
             throw new DataAccessException("Could not acces favorite");
         }
-
 
     }
 
