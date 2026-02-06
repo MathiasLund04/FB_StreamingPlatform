@@ -44,6 +44,14 @@ public class StreamingService {
         return uRepo.findByEmail(e);
     }
 
+    public void addFavoriteByEmail(String email, int movieID) throws DataAccessException {
+        String e = validateEmail(email);
+
+        User user = uRepo.findByEmail(e).orElseThrow(() -> new ValidationException("User with email " + e + " not found"));
+
+        fRepo.addFavorite(movieID, user.getId());
+    }
+
     public void movieCount(){
         mRepo.movieCount();
     }

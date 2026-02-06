@@ -95,6 +95,22 @@ public class MainController {
     }
 
     @FXML
+    private void onAdd() {
+        Movie selected = mTable.getSelectionModel().getSelectedItem();
+        if( selected == null ) {
+            lblStatus.setText("Please select a movie");
+        }
+        String email = searchTxt.getText();
+        try {
+            service.addFavoriteByEmail(email, selected.getId());
+            fTable.getItems().setAll(service.findFavoriteByEmail(email));
+
+        } catch (DataAccessException dae) {
+            throw new DataAccessException("Error adding to favorite try again later");
+        }
+    }
+
+    @FXML
     private void onSearch() {
         String email =  searchTxt.getText();
         try{

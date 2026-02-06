@@ -1,21 +1,21 @@
 Create database StreamingPlatform
 use StreamingPlatform
 
-create table User(
+create table user(
 id int primary key auto_increment,
 email varchar(50) not null,
 name varchar(50) not null,
 SubscriptionType ENUM('Basic','Standard','Premium') not null
 );
 
-create table Movie(
+create table movie(
 id int primary key auto_increment,
 title varchar(100) not null,
 rating double not null,
 genre varchar(50)
 );
 
-create table Favorite(
+create table favorite(
 userID int,
 movieID int not null,
 foreign key (userID) references user(id),
@@ -27,7 +27,7 @@ from favorite
 inner join user on favorite.userID = user.id
 inner join movie on favorite.movieID = movie.id;
 
-insert into Movie(title,rating,genre)
+insert into movie(title,rating,genre)
 value
 ('Godfather', 9.2, 'Crime Drama'),
 ('Pulp Fiction', 8.8 , 'Drama'),
@@ -40,7 +40,7 @@ value
 ('Frankenstein', 7.5 , 'Horror'),
 ('Scary Movie', 6.3 , 'Horror Parody')
 
-insert into User(email,name,SubscriptionType)
+insert into user(email,name,SubscriptionType)
 value
 ('Test1234@mail.com','John Doe','Basic'),
 ('Bob1977@gmail.com','Bob','Basic'),
@@ -48,7 +48,7 @@ value
 ('Pat34@gmail.com','Patrick','Standard'),
 ('Mils2789@gmail.com','Miller','Standard')
 
-insert into Favorite
+insert into favorite
 value
 (2,1),
 (2,2),

@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="602.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.MainController">
+<BorderPane prefHeight="602.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.MainController">
     <center>
         <SplitPane dividerPositions="0.5151515151515151" BorderPane.alignment="CENTER">
             <items>
@@ -29,7 +21,7 @@
                         <Label fx:id="lblStatus" text="Label" />
                         <HBox prefHeight="51.0" prefWidth="634.0">
                             <children>
-                                <Button mnemonicParsing="false" text="Favorite">
+                                <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAdd" text="Add">
                                     <HBox.margin>
                                         <Insets left="20.0" top="10.0" />
                                     </HBox.margin>

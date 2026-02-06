@@ -47,10 +47,19 @@ public class MySqlFavoriteRepository {
 }
 
     public void addFavorite(int userID, int movieID){
-        String sql = """
-            INSERT IGNORE INTO favorite ()
-            
-        """
+        String sql = "INSERT IGNORE INTO favorite(userID,movieID)  VALUES (?,?)";
+
+        try(Connection con = db.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, userID);
+            ps.setInt(2, movieID);
+            ps.executeUpdate();
+
+        } catch (SQLException e){
+            throw new DataAccessException("Could not add to favorite");
+        }
+
     }
 
     public Movie favMapRow(ResultSet rs) throws SQLException {
